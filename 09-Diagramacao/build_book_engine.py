@@ -52,10 +52,16 @@ def copy_approved_assets():
         ("char_sheet_adao_eva_1794578814115.jpg", "04-Biblia-de-Personagens/char_sheet_adao_eva.jpg"),
         ("char_sheet_noe_familia_1794578839466.jpg", "04-Biblia-de-Personagens/char_sheet_noe_familia.jpg"),
         ("char_sheet_jesus_historico_1794578973254.jpg", "04-Biblia-de-Personagens/char_sheet_jesus_historico.jpg"),
+        ("char_sheet_moises_miriam_1794598522689.jpg", "04-Biblia-de-Personagens/char_sheet_moises_miriam.jpg"),
         ("vol1_cap1_cena1_misterio_abismo_1794578923931.jpg", "08-Ilustracoes-Originais/vol1_cap1_cena1_misterio_abismo.jpg"),
         ("vol1_cap1_cena5_animais_jardim_1794578850797.jpg", "08-Ilustracoes-Originais/vol1_cap1_cena5_animais_jardim.jpg"),
         ("vol1_cap1_cena6_humanidade_sopro_1794578887504.jpg", "08-Ilustracoes-Originais/vol1_cap1_cena6_humanidade_sopro.jpg"),
         ("vol1_cap1_cena7_nomes_cuidadores_1794578949947.jpg", "08-Ilustracoes-Originais/vol1_cap1_cena7_nomes_cuidadores.jpg"),
+        ("vol1_cap2_jardim_eden_1794597077896.jpg", "08-Ilustracoes-Originais/vol1_cap2_jardim_eden.jpg"),
+        ("vol1_cap3_escolha_jardim_1794597406575.jpg", "08-Ilustracoes-Originais/vol1_cap3_escolha_jardim.jpg"),
+        ("vol1_cap4_caim_abel_1794597513298.jpg", "08-Ilustracoes-Originais/vol1_cap4_caim_abel.jpg"),
+        ("vol1_cap5_arca_noe_1794597135841.jpg", "08-Ilustracoes-Originais/vol1_cap5_arca_noe.jpg"),
+        ("vol1_cap6_torre_babel_1794597605073.jpg", "08-Ilustracoes-Originais/vol1_cap6_torre_babel.jpg"),
     ]
     for src_name, dst_rel in mapping:
         src = os.path.join(BRAIN_DIR, src_name)
@@ -427,7 +433,7 @@ def build_pilot_pages():
         "Mas aquele escuro não estava vazio nem sozinho. Sobre as águas quietas pairava o Ruach — o Sopro da Presença de Deus — como uma brisa viva, morna e luminosa, esperando o momento exato de cantar a primeira música da criação."
     )
     draw_wrapped_text(d3, t_p3, 135, 1280, PAGE_W - 270, f_body, fill=(248, 250, 252), line_spacing=1.36)
-    draw_wrapped_text(d3, "★ VOCÊ PERCEBEU? Olhe para o espelho d'água: a luz dourada e azul já está acordando as ondas!", 135, 1810, PAGE_W - 270, f_box_body, fill=(253, 224, 71))
+    draw_wrapped_text(d3, "» VOCÊ PERCEBEU? Olhe para o espelho d'água: a luz dourada e azul já está acordando as ondas!", 135, 1810, PAGE_W - 270, f_box_body, fill=(253, 224, 71))
     p3_rgb = p3.convert("RGB")
     draw_page_footer(p3_rgb, 8, "CAPÍTULO 1  •  ANTES DE TUDO, A LUZ", dark_mode=True)
     pages.append(("piloto_p03_abismo.png", p3_rgb))
@@ -487,7 +493,7 @@ def build_pilot_pages():
     draw_wrapped_text(d6, t_p6, 100, 1275, PAGE_W - 200, f_body, fill=(41, 37, 36), line_spacing=1.36)
     p6 = draw_rounded_panel(p6, (100, 1745, PAGE_W - 100, 1890), (204, 251, 241, 255), (13, 148, 136, 255), border_width=2, radius=18)
     d6 = ImageDraw.Draw(p6)
-    draw_wrapped_text(d6, "★ PEQUENA GRANDE DESCOBERTA: Cada árvore frutífera guarda dentro de sua semente um 'mapa' completo para fazer nascer outra árvore igualzinha! É a vida se multiplicando como diz Gênesis 1:11.", 130, 1768, PAGE_W - 260, f_box_body, fill=(19, 78, 74), line_spacing=1.35)
+    draw_wrapped_text(d6, "» PEQUENA GRANDE DESCOBERTA: Cada árvore frutífera guarda dentro de sua semente um 'mapa' completo para fazer nascer outra árvore igualzinha! É a vida se multiplicando como diz Gênesis 1:11.", 130, 1768, PAGE_W - 260, f_box_body, fill=(19, 78, 74), line_spacing=1.35)
     p6_rgb = p6.convert("RGB")
     draw_page_footer(p6_rgb, 11, "CAPÍTULO 1  •  CÉU, MAR E TERRA FÉRTIL", dark_mode=False)
     pages.append(("piloto_p06_ceu_mar_terra.png", p6_rgb))
@@ -511,7 +517,7 @@ def build_pilot_pages():
     draw_wrapped_text(d7, t_p7, 100, 1275, PAGE_W - 200, f_body, fill=(241, 245, 249), line_spacing=1.36)
     p7 = draw_rounded_panel(p7, (100, 1765, PAGE_W - 100, 1890), (30, 41, 59, 240), (56, 189, 248, 220), border_width=2, radius=18)
     d7 = ImageDraw.Draw(p7)
-    draw_wrapped_text(d7, "★ VOCÊ PERCEBEU? Na ilustração acima, a pomba branca voa bem no raio de luz dourada que liga o céu estrelado às ondas do mar!", 130, 1790, PAGE_W - 260, f_box_body, fill=(186, 230, 253))
+    draw_wrapped_text(d7, "» VOCÊ PERCEBEU? Na ilustração acima, a pomba branca voa bem no raio de luz dourada que liga o céu estrelado às ondas do mar!", 130, 1790, PAGE_W - 260, f_box_body, fill=(186, 230, 253))
     p7_rgb = p7.convert("RGB")
     draw_page_footer(p7_rgb, 12, "CAPÍTULO 1  •  ESTRELAS, MARES E AVES", dark_mode=True)
     pages.append(("piloto_p07_estrelas_aves.png", p7_rgb))
@@ -535,7 +541,7 @@ def build_pilot_pages():
     draw_wrapped_text(d8, t_p8, 100, 1345, PAGE_W - 200, f_body, fill=(41, 37, 36), line_spacing=1.36)
     p8 = draw_rounded_panel(p8, (100, 1775, PAGE_W - 100, 1890), (236, 252, 203, 255), (101, 163, 13, 255), border_width=2, radius=18)
     d8 = ImageDraw.Draw(p8)
-    draw_wrapped_text(d8, "★ DESAFIO DO EXPLORADOR: Quantos passarinhos cantores no galho florido e quantas borboletas você consegue contar nesta cena?", 130, 1800, PAGE_W - 260, f_box_body, fill=(54, 83, 20))
+    draw_wrapped_text(d8, "» DESAFIO DO EXPLORADOR: Quantos passarinhos cantores no galho florido e quantas borboletas você consegue contar nesta cena?", 130, 1800, PAGE_W - 260, f_box_body, fill=(54, 83, 20))
     p8_rgb = p8.convert("RGB")
     draw_page_footer(p8_rgb, 13, "CAPÍTULO 1  •  OS ANIMAIS DO JARDIM", dark_mode=False)
     pages.append(("piloto_p08_animais_jardim.png", p8_rgb))
@@ -599,7 +605,7 @@ def build_pilot_pages():
 
     p11 = draw_rounded_panel(p11, (85, 1620, PAGE_W - 85, 1890), (15, 23, 42, 228), (56, 189, 248, 220), border_width=3, radius=24)
     d11 = ImageDraw.Draw(p11)
-    draw_wrapped_text(d11, "★ CONVERSE COMIGO EM FAMÍLIA:", 130, 1650, PAGE_W - 260, f_box_title, fill=(253, 224, 71))
+    draw_wrapped_text(d11, "» CONVERSE COMIGO EM FAMÍLIA:", 130, 1650, PAGE_W - 260, f_box_title, fill=(253, 224, 71))
     draw_wrapped_text(d11, "Por que descansar depois de trabalhar ou estudar é tão importante? Qual é o lugar da natureza onde você sente mais paz no coração?", 130, 1700, PAGE_W - 260, f_body, fill=(241, 245, 249), line_spacing=1.35)
     p11_rgb = p11.convert("RGB")
     draw_page_footer(p11_rgb, 16, "CAPÍTULO 1  •  O SÉTIMO MOMENTO", dark_mode=True)
@@ -648,6 +654,116 @@ def build_pilot_pages():
     draw_page_footer(p12_rgb, 17, "PEQUENA GRANDE DESCOBERTA  •  NOTAS HISTÓRICAS E VISUAIS", dark_mode=False)
     pages.append(("piloto_p12_descobertas_e_personagens.png", p12_rgb))
 
+    # =========================================================================
+    # PÁGINA 13 DO VOLUME 1: CAPÍTULO 2 — O JARDIM DAS ÁGUAS VIVAS (GÊNESIS 2)
+    # =========================================================================
+    p13 = Image.new("RGBA", (PAGE_W, PAGE_H), (253, 251, 247, 255))
+    c2_img = Image.open(os.path.join(art_dir, "vol1_cap2_jardim_eden.jpg")).convert("RGB")
+    p13.paste(crop_and_resize(c2_img, PAGE_W - 140, 1020), (70, 70))
+    d13 = ImageDraw.Draw(p13)
+    d13.rectangle([70, 70, PAGE_W - 70, 1090], outline=(101, 163, 13), width=4)
+    draw_wrapped_text(d13, "CAPÍTULO 2  •  O JARDIM DAS ÁGUAS VIVAS", 90, 1125, PAGE_W - 180, f_h2, fill=(63, 98, 18))
+    draw_wrapped_text(d13, "Base Bíblica: Gênesis 2:8–25 (Os Quatro Rios do Éden e a Família Humana)", 90, 1180, PAGE_W - 180, f_ref, fill=(180, 83, 9))
+    t_p13 = (
+        "No coração do Éden brotava uma fonte cristalina que se dividia em quatro grandes rios: Pisom, Giom, Tigre e Eufrates. No alto da colina central brilhava a Árvore da Vida, cujas folhas refletiam a luz dourada do Criador.\n\n"
+        "Adão e Eva caminhavam de mãos dadas pelos pomares de figos, romãs e oliveiras, aprendendo a cultivar a terra com carinho e a chamar cada animal pelo nome."
+    )
+    draw_wrapped_text(d13, t_p13, 90, 1235, PAGE_W - 180, f_body, fill=(41, 37, 36), line_spacing=1.36)
+    p13 = draw_rounded_panel(p13, (90, 1745, PAGE_W - 90, 1890), (236, 252, 203, 255), (101, 163, 13, 255), border_width=2, radius=18)
+    d13 = ImageDraw.Draw(p13)
+    draw_wrapped_text(d13, "» PEQUENA GRANDE DESCOBERTA: Os rios Tigre e Eufrates existem até hoje no Oriente Médio! Foi entre as águas deles que nasceram as primeiras cidades e pomares da antiguidade.", 120, 1770, PAGE_W - 240, f_box_body, fill=(54, 83, 20))
+    p13_rgb = p13.convert("RGB")
+    draw_page_footer(p13_rgb, 18, "VOLUME 1  •  CAPÍTULO 2: O JARDIM DAS ÁGUAS VIVAS", dark_mode=False)
+    pages.append(("piloto_p13_cap2_jardim_eden.png", p13_rgb))
+
+    # =========================================================================
+    # PÁGINA 14 DO VOLUME 1: CAPÍTULO 3 — A ESCOLHA INTERROMPIDA E O FIO DA PROMESSA
+    # =========================================================================
+    p14 = Image.new("RGBA", (PAGE_W, PAGE_H), (15, 23, 42, 255))
+    c3_img = Image.open(os.path.join(art_dir, "vol1_cap3_escolha_jardim.jpg")).convert("RGB")
+    p14.paste(crop_and_resize(c3_img, PAGE_W - 140, 1020), (70, 70))
+    d14 = ImageDraw.Draw(p14)
+    d14.rectangle([70, 70, PAGE_W - 70, 1090], outline=(245, 190, 70), width=4)
+    draw_wrapped_text(d14, "CAPÍTULO 3  •  ONDE VOCÊ ESTÁ? O FIO DA PROMESSA", 90, 1125, PAGE_W - 180, f_h2, fill=(253, 224, 71))
+    draw_wrapped_text(d14, "Base Bíblica: Gênesis 3:1–24", 90, 1180, PAGE_W - 180, f_ref, fill=(186, 230, 253))
+    t_p14 = (
+        "Quando Adão e Eva desconfiaram da sabedoria do Criador e tomaram do fruto que não deviam, sentiram medo e se esconderam entre as samambaias do jardim na brisa da tarde.\n\n"
+        "Mas a Luz de Deus não desistiu deles! Uma fita dourada e mansa entrou entre as árvores chamando com amor: 'Onde você está?'. Mesmo saindo do jardim, eles levaram consigo a promessa de que um dia a Luz venceria toda sombra."
+    )
+    draw_wrapped_text(d14, t_p14, 90, 1235, PAGE_W - 180, f_body, fill=(248, 250, 252), line_spacing=1.36)
+    p14 = draw_rounded_panel(p14, (90, 1745, PAGE_W - 90, 1890), (30, 41, 59, 240), (245, 190, 70, 220), border_width=2, radius=18)
+    d14 = ImageDraw.Draw(p14)
+    draw_wrapped_text(d14, "» O QUE VOCÊ FARIA? Quando cometemos um erro em casa ou na escola, por que pedir desculpas e falar a verdade é sempre melhor do que se esconder?", 120, 1770, PAGE_W - 240, f_box_body, fill=(253, 224, 71))
+    p14_rgb = p14.convert("RGB")
+    draw_page_footer(p14_rgb, 26, "VOLUME 1  •  CAPÍTULO 3: O FIO DA PROMESSA", dark_mode=True)
+    pages.append(("piloto_p14_cap3_escolha_jardim.png", p14_rgb))
+
+    # =========================================================================
+    # PÁGINA 15 DO VOLUME 1: CAPÍTULO 4 — DOIS IRMÃOS E O SEGREDO DO CORAÇÃO
+    # =========================================================================
+    p15 = Image.new("RGBA", (PAGE_W, PAGE_H), (253, 251, 247, 255))
+    c4_img = Image.open(os.path.join(art_dir, "vol1_cap4_caim_abel.jpg")).convert("RGB")
+    p15.paste(crop_and_resize(c4_img, PAGE_W - 140, 1020), (70, 70))
+    d15 = ImageDraw.Draw(p15)
+    d15.rectangle([70, 70, PAGE_W - 70, 1090], outline=(180, 83, 9), width=4)
+    draw_wrapped_text(d15, "CAPÍTULO 4  •  DOIS IRMÃOS E O SEGREDO DO CORAÇÃO", 90, 1125, PAGE_W - 180, f_h2, fill=(146, 64, 14))
+    draw_wrapped_text(d15, "Base Bíblica: Gênesis 4:1–16 (Caim e Abel)", 90, 1180, PAGE_W - 180, f_ref, fill=(30, 58, 138))
+    t_p15 = (
+        "Caim cultivava o trigo dourado e os frutos da terra; seu irmão Abel cuidava das ovelhas com ternura. Quando trouxeram suas ofertas, Abel entregou o melhor com um coração sincero e grato.\n\n"
+        "Ao ver Caim entristecido pela inveja, a Presença Luminosa sussurrou ao seu coração: 'Se você fizer o bem, não terá paz? A raiva fica espreitando à porta, mas você pode escolher dominá-la com o amor!'"
+    )
+    draw_wrapped_text(d15, t_p15, 90, 1235, PAGE_W - 180, f_body, fill=(41, 37, 36), line_spacing=1.36)
+    p15 = draw_rounded_panel(p15, (90, 1745, PAGE_W - 90, 1890), (254, 243, 199, 255), (217, 119, 6, 255), border_width=2, radius=18)
+    d15 = ImageDraw.Draw(p15)
+    draw_wrapped_text(d15, "» CONVERSE COMIGO: O que ajuda você a acalmar o coração quando sente ciúmes ou chateação com um irmão ou amigo?", 120, 1775, PAGE_W - 240, f_box_body, fill=(146, 64, 14))
+    p15_rgb = p15.convert("RGB")
+    draw_page_footer(p15_rgb, 34, "VOLUME 1  •  CAPÍTULO 4: CAIM E ABEL", dark_mode=False)
+    pages.append(("piloto_p15_cap4_caim_abel.png", p15_rgb))
+
+    # =========================================================================
+    # PÁGINA 16 DO VOLUME 1: CAPÍTULO 5 — A GRANDE ARCA E O ARCO NO CÉU
+    # =========================================================================
+    p16 = Image.new("RGBA", (PAGE_W, PAGE_H), (15, 23, 42, 255))
+    c5_img = Image.open(os.path.join(art_dir, "vol1_cap5_arca_noe.jpg")).convert("RGB")
+    p16.paste(crop_and_resize(c5_img, PAGE_W - 140, 1020), (70, 70))
+    d16 = ImageDraw.Draw(p16)
+    d16.rectangle([70, 70, PAGE_W - 70, 1090], outline=(245, 190, 70), width=4)
+    draw_wrapped_text(d16, "CAPÍTULO 5  •  A GRANDE ARCA E O ARCO DA ALIANÇA", 90, 1125, PAGE_W - 180, f_h2, fill=(253, 224, 71))
+    draw_wrapped_text(d16, "Base Bíblica: Gênesis 6:9–9:17 (Noé, sua Família e a Preservação da Vida)", 90, 1180, PAGE_W - 180, f_ref, fill=(186, 230, 253))
+    t_p16 = (
+        "Quando a violência ameaçou estragar a Terra, Noé e sua família ouviram a voz da Luz e construíram uma grande Arca de madeira de cipreste calafetada com betume, um verdadeiro abrigo flutuante para salvar a vida!\n\n"
+        "Casais de elefantes, leões, girafas, cervos e pombas subiram a rampa sob um feixe dourado de esperança. E depois das águas, o arco-íris brilhou nas nuvens como sinal eterno da paz de Deus com toda criatura viva."
+    )
+    draw_wrapped_text(d16, t_p16, 90, 1235, PAGE_W - 180, f_body, fill=(248, 250, 252), line_spacing=1.36)
+    p16 = draw_rounded_panel(p16, (90, 1745, PAGE_W - 90, 1890), (30, 41, 59, 240), (56, 189, 248, 220), border_width=2, radius=18)
+    d16 = ImageDraw.Draw(p16)
+    draw_wrapped_text(d16, "» VOCÊ PERCEBEU? Em hebraico, a palavra 'Tevah' é usada apenas duas vezes na Bíblia: para a Arca de Noé e para o cestinho de Moisés no Nilo! Ambos salvaram a vida sobre as águas.", 120, 1770, PAGE_W - 240, f_box_body, fill=(186, 230, 253))
+    p16_rgb = p16.convert("RGB")
+    draw_page_footer(p16_rgb, 44, "VOLUME 1  •  CAPÍTULO 5: A ARCA DE NOÉ", dark_mode=True)
+    pages.append(("piloto_p16_cap5_arca_noe.png", p16_rgb))
+
+    # =========================================================================
+    # PÁGINA 17 DO VOLUME 1: CAPÍTULO 6 — A CIDADE DE TIJOLOS E O MUNDO INTEIRO
+    # =========================================================================
+    p17 = Image.new("RGBA", (PAGE_W, PAGE_H), (253, 251, 247, 255))
+    c6_img = Image.open(os.path.join(art_dir, "vol1_cap6_torre_babel.jpg")).convert("RGB")
+    p17.paste(crop_and_resize(c6_img, PAGE_W - 140, 1020), (70, 70))
+    d17 = ImageDraw.Draw(p17)
+    d17.rectangle([70, 70, PAGE_W - 70, 1090], outline=(180, 83, 9), width=4)
+    draw_wrapped_text(d17, "CAPÍTULO 6  •  A CIDADE DE TIJOLOS E O MUNDO INTEIRO", 90, 1125, PAGE_W - 180, f_h2, fill=(146, 64, 14))
+    draw_wrapped_text(d17, "Base Bíblica: Gênesis 11:1–9 (O Zigurate de Babel e a Diversidade dos Povos)", 90, 1180, PAGE_W - 180, f_ref, fill=(30, 58, 138))
+    t_p17 = (
+        "Na planície de Sinar, os homens aprenderam a assar tijolos de barro e quiseram levantar um imenso zigurate em degraus para ficar presos num só lugar e buscar fama apenas para si mesmos.\n\n"
+        "Mas o sonho da Presença Criadora era um mundo cheio de cores, culturas e línguas diferentes! Sob o arco de luz dourada e safira, as famílias partiram por muitos caminhos para habitar toda a Terra — preparando o cenário para o chamado de Abraão no Volume 2!"
+    )
+    draw_wrapped_text(d17, t_p17, 90, 1235, PAGE_W - 180, f_body, fill=(41, 37, 36), line_spacing=1.35)
+    p17 = draw_rounded_panel(p17, (90, 1745, PAGE_W - 90, 1890), (254, 243, 199, 255), (217, 119, 6, 255), border_width=2, radius=18)
+    d17 = ImageDraw.Draw(p17)
+    draw_wrapped_text(d17, "» PEQUENA GRANDE DESCOBERTA: A Torre de Babel não era redonda como nas pinturas medievais, mas um Zigurate mesopotâmico em degraus quadrados, feito de tijolos de barro e betume!", 120, 1770, PAGE_W - 240, f_box_body, fill=(146, 64, 14))
+    p17_rgb = p17.convert("RGB")
+    draw_page_footer(p17_rgb, 56, "VOLUME 1  •  CAPÍTULO 6: O ZIGURATE DE BABEL", dark_mode=False)
+    pages.append(("piloto_p17_cap6_torre_babel.png", p17_rgb))
+
     saved_paths = []
     for fname, im in pages:
         fpath = os.path.join(diag_dir, fname)
@@ -656,7 +772,12 @@ def build_pilot_pages():
         print(f"   Página diagramada salva: {fname}")
 
     # Copiar páginas-chave para o diretório de artefatos para apresentação visual direta ao usuário
-    for fname in ["piloto_p03_abismo.png", "piloto_p04_fiat_lux_esq.png", "piloto_p08_animais_jardim.png", "piloto_p09_humanidade_sopro.png", "piloto_p10_nomes_cuidadores.png", "piloto_p12_descobertas_e_personagens.png"]:
+    for fname in [
+        "piloto_p03_abismo.png", "piloto_p04_fiat_lux_esq.png", "piloto_p08_animais_jardim.png",
+        "piloto_p09_humanidade_sopro.png", "piloto_p10_nomes_cuidadores.png", "piloto_p12_descobertas_e_personagens.png",
+        "piloto_p13_cap2_jardim_eden.png", "piloto_p14_cap3_escolha_jardim.png", "piloto_p15_cap4_caim_abel.png",
+        "piloto_p16_cap5_arca_noe.png", "piloto_p17_cap6_torre_babel.png"
+    ]:
         shutil.copy2(os.path.join(diag_dir, fname), os.path.join(BRAIN_DIR, fname))
 
     return saved_paths
@@ -755,6 +876,11 @@ def export_pdfs_and_epub(page_paths):
       <li><a href="page_04.xhtml">Faça-se a Luz! (Fiat Lux)</a></li>
       <li><a href="page_09.xhtml">Filhos do Barro e da Luz</a></li>
       <li><a href="page_12.xhtml">Pequena Grande Descoberta e Bíblia de Personagens</a></li>
+      <li><a href="page_13.xhtml">Capítulo 2 — O Jardim das Águas Vivas</a></li>
+      <li><a href="page_14.xhtml">Capítulo 3 — Onde Você Está? O Fio da Promessa</a></li>
+      <li><a href="page_15.xhtml">Capítulo 4 — Dois Irmãos e o Segredo do Coração</a></li>
+      <li><a href="page_16.xhtml">Capítulo 5 — A Grande Arca e o Arco da Aliança</a></li>
+      <li><a href="page_17.xhtml">Capítulo 6 — A Cidade de Tijolos e o Mundo Inteiro</a></li>
     </ol>
   </nav>
 </body>

@@ -4,16 +4,16 @@
 Motor Editorial e de Ilustração — Volume 3 (eBook 3): O Caminho da Liberdade
 Subtítulo: O príncipe do Nilo e a travessia do deserto
 Autor: Fabio (Publicação Independente / Autônoma)
-Gera as ilustrações em alta definição, a Capa Oficial do Volume 3 (seguindo o padrão da Capa 2 Aventura Infantil escolhida por Fabio),
-as 8 páginas do Piloto Ilustrado do Volume 3, o PDF HD e o EPUB 3 Fixed-Layout.
+Organiza as ilustrações 3D originais em alta definição, gera a Capa Oficial do Volume 3
+(seguindo o padrão da Capa 2 Aventura Infantil escolhida por Fabio),
+as 8 páginas completas do Volume 3 (Capa, Capítulos 1 a 6 e Página de Descobertas + Bíblia de Personagens),
+e exporta PDF HD, PDF de Impressão 300 DPI com sangria e EPUB 3 Fixed-Layout (Amazon KDP).
 """
 
 import os
-import math
-import random
 import shutil
 import zipfile
-from PIL import Image, ImageDraw, ImageFont, ImageFilter, ImageEnhance
+from PIL import Image, ImageDraw, ImageFont
 
 BASE_DIR = "/home/ubuntu-desktop-bootstrap-ubuntu-/.gemini/antigravity-cli/scratch/A-Grande-Historia-da-Luz"
 BRAIN_DIR = "/home/ubuntu-desktop-bootstrap-ubuntu-/.gemini/antigravity-cli/brain/026b6e7b-1190-4ec1-b3f4-789abc0233f8"
@@ -116,24 +116,37 @@ def draw_page_footer(img, page_num, chapter_label="VOLUME 3  •  O CAMINHO DA L
     bbox = draw.textbbox((0, 0), p_str, font=f_foot)
     draw.text((PAGE_W - 90 - (bbox[2] - bbox[0]), PAGE_H - 62), p_str, font=f_foot, fill=color)
 
-def render_vol3_illustrations():
-    os.makedirs(os.path.join(VOL3_DIR, "ilustracoes"), exist_ok=True)
-    os.makedirs(os.path.join(VOL3_DIR, "paginas_piloto"), exist_ok=True)
+def prepare_vol3_assets():
+    print("-> Copiando e preparando ilustrações 3D originais do Volume 3...")
+    ilus_dir = os.path.join(VOL3_DIR, "ilustracoes")
+    p_dir = os.path.join(VOL3_DIR, "paginas_piloto")
+    os.makedirs(ilus_dir, exist_ok=True)
+    os.makedirs(p_dir, exist_ok=True)
 
-    aventura_base = Image.open(os.path.join(BASE_DIR, "03-Identidade-Visual/capa_conceito_2_aventura_base.jpg")).convert("RGB")
-    cosmica_base = Image.open(os.path.join(BASE_DIR, "03-Identidade-Visual/capa_conceito_1_cosmica_base.jpg")).convert("RGB")
-    abismo_base = Image.open(os.path.join(BASE_DIR, "08-Ilustracoes-Originais/vol1_cap1_cena1_misterio_abismo.jpg")).convert("RGB")
+    mapping = [
+        ("vol3_capa_base_aventura_1794596842460.jpg", os.path.join(ilus_dir, "vol3_capa_base_aventura.jpg")),
+        ("vol3_cap1_cesto_nilo_1794596888777.jpg", os.path.join(ilus_dir, "vol3_cap1_cesto_nilo.jpg")),
+        ("vol3_cap2_sarca_luz_1794596959576.jpg", os.path.join(ilus_dir, "vol3_cap2_sarca_luz.jpg")),
+        ("vol3_cap3_noite_liberdade_1794598327853.jpg", os.path.join(ilus_dir, "vol3_cap3_noite_liberdade.jpg")),
+        ("vol3_cap4_travessia_mar_1794597022524.jpg", os.path.join(ilus_dir, "vol3_cap4_travessia_mar.jpg")),
+        ("vol3_cap5_pao_do_ceu_sinai_1794597691202.jpg", os.path.join(ilus_dir, "vol3_cap5_pao_do_ceu_sinai.jpg")),
+        ("vol3_cap6_terra_prometida_1794597798763.jpg", os.path.join(ilus_dir, "vol3_cap6_terra_prometida.jpg")),
+        ("char_sheet_moises_miriam_1794598522689.jpg", os.path.join(BASE_DIR, "04-Biblia-de-Personagens/char_sheet_moises_miriam.jpg")),
+    ]
+    for src_name, dst_path in mapping:
+        src = os.path.join(BRAIN_DIR, src_name)
+        if os.path.exists(src):
+            shutil.copy2(src, dst_path)
+            print(f"   Ativo copiado: {os.path.basename(dst_path)}")
 
-    # 1. Capa Volume 3 (Estilo Capa 2 Aventura Infantil — Crianças levantinas sob o arco de luz e águas abertas)
-    cov_base = crop_and_resize(aventura_base, PAGE_W, PAGE_H)
-    # Ajuste de atmosfera quente dourada do Egito/Sinai
-    cov_base = ImageEnhance.Color(cov_base).enhance(1.12)
-    cov_rgba = cov_base.convert("RGBA")
+    # Diagramar a Capa Oficial do Volume 3 (Estilo Capa 2 Aventura Infantil + Autor Fabio)
+    aventura_v3 = Image.open(os.path.join(ilus_dir, "vol3_capa_base_aventura.jpg")).convert("RGB")
+    cov_rgba = crop_and_resize(aventura_v3, PAGE_W, PAGE_H).convert("RGBA")
     grad = Image.new("RGBA", (PAGE_W, PAGE_H), (0, 0, 0, 0))
     gdraw = ImageDraw.Draw(grad)
-    for y in range(540):
-        alpha = int(195 * (1 - y / 540.0) ** 1.35)
-        gdraw.line([(0, y), (PAGE_W, y)], fill=(12, 24, 52, alpha))
+    for y in range(520):
+        alpha = int(190 * (1 - y / 520.0) ** 1.35)
+        gdraw.line([(0, y), (PAGE_W, y)], fill=(8, 18, 44, alpha))
     for y in range(PAGE_H - 360, PAGE_H):
         alpha = int(215 * ((y - (PAGE_H - 360)) / 360.0) ** 1.3)
         gdraw.line([(0, y), (PAGE_W, y)], fill=(8, 16, 38, alpha))
@@ -156,82 +169,12 @@ def render_vol3_illustrations():
     cdraw = ImageDraw.Draw(cov_rgba)
     draw_wrapped_text(cdraw, "VOLUME 3  •  A BÍBLIA ILUSTRADA PARA PEQUENOS EXPLORADORES", 240, PAGE_H - 208, PAGE_W - 480, f_tag, fill=(254, 240, 138), align="center")
     draw_wrapped_text(cdraw, "FABIO", 240, PAGE_H - 142, PAGE_W - 480, f_author, fill=(255, 255, 255), align="center")
-    cov_path = os.path.join(VOL3_DIR, "ilustracoes/vol3_capa_oficial_aventura.png")
+    cov_path = os.path.join(ilus_dir, "vol3_capa_oficial_aventura.png")
     cov_rgba.convert("RGB").save(cov_path, quality=95)
     shutil.copy2(cov_path, os.path.join(BRAIN_DIR, "vol3_capa_oficial_aventura.png"))
 
-    # 2. Ilustração Cap. 1: O Pequeno Barco de Papiro no Rio Nilo (1600x1200)
-    nilo = Image.new("RGBA", (1600, 1200), (12, 28, 58, 255))
-    # Fundo de alvorada dourada sobre as águas do Nilo
-    n_bg = crop_and_resize(cosmica_base.crop((0, int(cosmica_base.height * 0.45), cosmica_base.width, cosmica_base.height)), 1600, 1200)
-    nilo.paste(n_bg, (0, 0))
-    ndraw = ImageDraw.Draw(nilo)
-    # Desenhar silhuetas ricas de juncos de papiro às margens e o cesto iluminado pela fita dourada
-    random.seed(101)
-    for x in list(range(30, 420, 22)) + list(range(1180, 1570, 22)):
-        h_reed = random.randint(380, 720)
-        lean = random.randint(-35, 35)
-        ndraw.line([(x, 1200), (x + lean, 1200 - h_reed)], fill=(20, 83, 45, 230), width=7)
-        # Coroa de papiro no topo
-        tx, ty = x + lean, 1200 - h_reed
-        for a in range(-40, 45, 16):
-            rad = math.radians(a - 90)
-            ndraw.line([(tx, ty), (tx + int(math.cos(rad)*55), ty + int(math.sin(rad)*55))], fill=(34, 139, 74, 210), width=3)
-    # Cesto de papiro flutuando no centro com halo de luz protetora (Fiat Lux)
-    glow = Image.new("RGBA", (1600, 1200), (0, 0, 0, 0))
-    gld = ImageDraw.Draw(glow)
-    for r in range(260, 10, -10):
-        gld.ellipse([800 - r, 860 - int(r*0.6), 800 + r, 860 + int(r*0.6)], fill=(255, 215, 90, int(85 * (1 - r/260.0)**2)))
-    gld.rounded_rectangle([690, 810, 910, 915], radius=45, fill=(146, 64, 14, 255), outline=(253, 224, 71, 255), width=4)
-    gld.arc([700, 735, 830, 880], start=180, end=360, fill=(180, 83, 9, 255), width=14)
-    glow = glow.filter(ImageFilter.GaussianBlur(radius=2))
-    nilo = Image.alpha_composite(nilo, glow)
-    nilo.convert("RGB").save(os.path.join(VOL3_DIR, "ilustracoes/vol3_cap1_cesto_nilo.png"), quality=95)
-
-    # 3. Ilustração Cap. 2: A Sarça que Brilhava Sem Queimar (1600x1200)
-    sarca = crop_and_resize(abismo_base, 1600, 1200).convert("RGBA")
-    s_ov = Image.new("RGBA", (1600, 1200), (0, 0, 0, 0))
-    sd = ImageDraw.Draw(s_ov)
-    # Colina rochosa do Horebe
-    sd.polygon([(0, 1200), (0, 920), (450, 780), (950, 740), (1600, 890), (1600, 1200)], fill=(45, 30, 22, 245))
-    # Explosão de luz dourada e safira na sarça (sem queimar os ramos verdes-esmeralda)
-    bx, by = 800, 560
-    for r in range(420, 15, -12):
-        col = (255, 210, 75, int(110 * (1 - r/420.0)**2)) if r % 24 == 0 else (56, 189, 248, int(75 * (1 - r/420.0)**2))
-        sd.ellipse([bx - r, by - r, bx + r, by + r], fill=col)
-    s_ov = s_ov.filter(ImageFilter.GaussianBlur(radius=10))
-    sarca = Image.alpha_composite(sarca, s_ov)
-    sd2 = ImageDraw.Draw(sarca)
-    # Galhos vivos da acácia/sarça brilhando no centro da luz
-    random.seed(202)
-    for i in range(-5, 6):
-        angle = math.radians(-90 + i * 14)
-        ex = bx + int(math.cos(angle) * 230)
-        ey = by + int(math.sin(angle) * 230)
-        sd2.line([(bx, by + 180), (ex, ey)], fill=(254, 240, 138, 240), width=6)
-        sd2.ellipse([ex - 14, ey - 14, ex + 14, ey + 14], fill=(16, 185, 129, 255), outline=(253, 224, 71, 255), width=2)
-    sarca.convert("RGB").save(os.path.join(VOL3_DIR, "ilustracoes/vol3_cap2_sarca_luz.png"), quality=95)
-
-    # 4. Ilustração Cap. 4: A Travessia do Mar Aberto pelo Vento e pela Coluna de Luz (1600x1200)
-    mar = Image.new("RGBA", (1600, 1200), (10, 20, 48, 255))
-    m_bg = crop_and_resize(cosmica_base, 1600, 1200)
-    mar.paste(m_bg, (0, 0))
-    m_ov = Image.new("RGBA", (1600, 1200), (0, 0, 0, 0))
-    md = ImageDraw.Draw(m_ov)
-    # Duas muralhas monumentais de água azul-turquesa nas laterais e caminho seco dourado no centro
-    md.polygon([(0, 220), (580, 460), (460, 1200), (0, 1200)], fill=(14, 116, 144, 215))
-    md.polygon([(1600, 220), (1020, 460), (1140, 1200), (1600, 1200)], fill=(14, 116, 144, 215))
-    md.polygon([(460, 1200), (580, 460), (1020, 460), (1140, 1200)], fill=(217, 160, 91, 235))
-    # Coluna de Luz Dourada no horizonte guiando o caminho
-    for r in range(180, 10, -10):
-        md.rectangle([800 - r, 40, 800 + r, 520], fill=(255, 230, 130, int(90 * (1 - r/180.0)**2)))
-    m_ov = m_ov.filter(ImageFilter.GaussianBlur(radius=12))
-    mar = Image.alpha_composite(mar, m_ov)
-    mar.convert("RGB").save(os.path.join(VOL3_DIR, "ilustracoes/vol3_cap4_travessia_mar.png"), quality=95)
-
-def build_vol3_pilot():
-    render_vol3_illustrations()
-    f_h1 = load_font("cinzel", 50)
+def build_vol3_pages_and_exports():
+    prepare_vol3_assets()
     f_h2 = load_font("cinzel", 36)
     f_body = load_font("nunito", 33)
     f_box_title = load_font("atkinson_bold", 27)
@@ -248,7 +191,7 @@ def build_vol3_pilot():
 
     # Pág. 2: Capítulo 1 — O Pequeno Barco de Papiro no Grande Rio
     p2 = Image.new("RGBA", (PAGE_W, PAGE_H), (253, 251, 247, 255))
-    cesto_im = Image.open(os.path.join(ilus_dir, "vol3_cap1_cesto_nilo.png")).convert("RGB")
+    cesto_im = Image.open(os.path.join(ilus_dir, "vol3_cap1_cesto_nilo.jpg")).convert("RGB")
     p2.paste(crop_and_resize(cesto_im, PAGE_W - 140, 1020), (70, 70))
     d2 = ImageDraw.Draw(p2)
     d2.rectangle([70, 70, PAGE_W - 70, 1090], outline=(180, 83, 9), width=4)
@@ -263,14 +206,14 @@ def build_vol3_pilot():
     draw_wrapped_text(d2, t2, 90, 1235, PAGE_W - 180, f_body, fill=(41, 37, 36), line_spacing=1.35)
     p2 = draw_rounded_panel(p2, (90, 1755, PAGE_W - 90, 1890), (254, 243, 199, 255), (217, 119, 6, 255), border_width=2, radius=18)
     d2 = ImageDraw.Draw(p2)
-    draw_wrapped_text(d2, "★ PEQUENA GRANDE DESCOBERTA: No antigo Egito, a planta do papiro servia tanto para fabricar rolos de escrita quanto pequenos barcos impermeabilizados com betume!", 120, 1780, PAGE_W - 240, f_box_body, fill=(146, 64, 14))
+    draw_wrapped_text(d2, "» PEQUENA GRANDE DESCOBERTA: No antigo Egito, a planta do papiro servia tanto para fabricar rolos de escrita quanto pequenos barcos impermeabilizados com betume!", 120, 1780, PAGE_W - 240, f_box_body, fill=(146, 64, 14))
     p2_rgb = p2.convert("RGB")
     draw_page_footer(p2_rgb, 8, "VOLUME 3  •  CAPÍTULO 1: O CESTO NO NILO", dark_mode=False)
     pages.append(("vol3_p02_cesto_nilo.png", p2_rgb))
 
     # Pág. 3: Capítulo 2 — O Arbusto que Brilhava Sem Queimar
     p3 = Image.new("RGBA", (PAGE_W, PAGE_H), (15, 23, 42, 255))
-    sarca_im = Image.open(os.path.join(ilus_dir, "vol3_cap2_sarca_luz.png")).convert("RGB")
+    sarca_im = Image.open(os.path.join(ilus_dir, "vol3_cap2_sarca_luz.jpg")).convert("RGB")
     p3.paste(crop_and_resize(sarca_im, PAGE_W - 140, 1020), (70, 70))
     d3 = ImageDraw.Draw(p3)
     d3.rectangle([70, 70, PAGE_W - 70, 1090], outline=(245, 190, 70), width=4)
@@ -290,26 +233,112 @@ def build_vol3_pilot():
     draw_page_footer(p3_rgb, 18, "VOLUME 3  •  CAPÍTULO 2: A SARÇA DE LUZ", dark_mode=True)
     pages.append(("vol3_p03_sarca_luz.png", p3_rgb))
 
-    # Pág. 4: Capítulo 4 — Quando o Vento Abriu um Caminho no Mar
-    p4 = Image.new("RGBA", (PAGE_W, PAGE_H), (10, 18, 42, 255))
-    mar_im = Image.open(os.path.join(ilus_dir, "vol3_cap4_travessia_mar.png")).convert("RGB")
-    p4.paste(crop_and_resize(mar_im, PAGE_W - 140, 1020), (70, 70))
-    d4 = ImageDraw.Draw(p4)
-    d4.rectangle([70, 70, PAGE_W - 70, 1090], outline=(56, 189, 248), width=4)
-    draw_wrapped_text(d4, "CAPÍTULO 4  •  UM CAMINHO NO MEIO DO MAR", 90, 1125, PAGE_W - 180, f_h2, fill=(253, 224, 71))
-    draw_wrapped_text(d4, "Base Bíblica: Êxodo 14:13–31; 15:20–21 (A Travessia e a Canção de Miriam)", 90, 1180, PAGE_W - 180, f_ref, fill=(125, 211, 252))
+    # Pág. 4: Capítulo 3 — O Coração Duro como Pedra e a Noite da Liberdade
+    p4_cap3 = Image.new("RGBA", (PAGE_W, PAGE_H), (12, 19, 38, 255))
+    noite_im = Image.open(os.path.join(ilus_dir, "vol3_cap3_noite_liberdade.jpg")).convert("RGB")
+    p4_cap3.paste(crop_and_resize(noite_im, PAGE_W - 140, 1020), (70, 70))
+    d4_c3 = ImageDraw.Draw(p4_cap3)
+    d4_c3.rectangle([70, 70, PAGE_W - 70, 1090], outline=(245, 190, 70), width=4)
+    draw_wrapped_text(d4_c3, "CAPÍTULO 3  •  A NOITE DA ESPERANÇA E DA LIBERDADE", 90, 1125, PAGE_W - 180, f_h2, fill=(253, 224, 71))
+    draw_wrapped_text(d4_c3, "Base Bíblica: Êxodo 7–12 (Os Sinais no Egito e a Primeira Páscoa)", 90, 1180, PAGE_W - 180, f_ref, fill=(186, 230, 253))
+    t_c3 = (
+        "Moisés e Arão pediram muitas vezes ao Faraó que deixasse o povo ir, mas o rei endureceu o coração diante dos grandes sinais na natureza. Até que chegou a noite decisiva da libertação!\n\n"
+        "Reunidas em suas casas de tijolos de barro, com as sandálias nos pés e o cajado na mão, as famílias repartiram o pão sem fermento sob o arco luminoso de proteção do Criador. Antes do amanhecer, as portas da liberdade finalmente se abriram!"
+    )
+    draw_wrapped_text(d4_c3, t_c3, 90, 1235, PAGE_W - 180, f_body, fill=(248, 250, 252), line_spacing=1.35)
+    p4_cap3 = draw_rounded_panel(p4_cap3, (90, 1755, PAGE_W - 90, 1890), (30, 41, 59, 240), (245, 190, 70, 220), border_width=2, radius=18)
+    d4_c3 = ImageDraw.Draw(p4_cap3)
+    draw_wrapped_text(d4_c3, "» PEQUENA GRANDE DESCOBERTA: A palavra 'Páscoa' vem do hebraico 'Pesach' ('passar por cima / proteger') e lembra a noite em que as famílias saíram rumo à liberdade!", 120, 1780, PAGE_W - 240, f_box_body, fill=(254, 240, 138))
+    p4_cap3_rgb = p4_cap3.convert("RGB")
+    draw_page_footer(p4_cap3_rgb, 28, "VOLUME 3  •  CAPÍTULO 3: A NOITE DA LIBERDADE", dark_mode=True)
+    pages.append(("vol3_p04_noite_liberdade.png", p4_cap3_rgb))
+
+    # Pág. 5: Capítulo 4 — Quando o Vento Abriu um Caminho no Mar
+    p5 = Image.new("RGBA", (PAGE_W, PAGE_H), (10, 18, 42, 255))
+    mar_im = Image.open(os.path.join(ilus_dir, "vol3_cap4_travessia_mar.jpg")).convert("RGB")
+    p5.paste(crop_and_resize(mar_im, PAGE_W - 140, 1020), (70, 70))
+    d5 = ImageDraw.Draw(p5)
+    d5.rectangle([70, 70, PAGE_W - 70, 1090], outline=(56, 189, 248), width=4)
+    draw_wrapped_text(d5, "CAPÍTULO 4  •  UM CAMINHO NO MEIO DO MAR", 90, 1125, PAGE_W - 180, f_h2, fill=(253, 224, 71))
+    draw_wrapped_text(d5, "Base Bíblica: Êxodo 14:13–31; 15:20–21 (A Travessia e a Canção de Miriam)", 90, 1180, PAGE_W - 180, f_ref, fill=(125, 211, 252))
     t4 = (
         "Diante das águas profundas do mar, o povo sentiu medo ao ouvir os carros do Faraó se aproximando. Mas Moisés disse com firmeza:\n"
         "— Não tenham medo! Fiquem firmes e vejam o livramento que o Senhor fará hoje!\n\n"
         "Guiado pela Coluna de Luz, um vento fortíssimo soprou a noite inteira, abrindo duas muralhas de água cristalina e revelando um caminho seco no meio do mar! Na outra margem, Miriam pegou seu tamborim e liderou a dança da liberdade."
     )
-    draw_wrapped_text(d4, t4, 90, 1235, PAGE_W - 180, f_body, fill=(248, 250, 252), line_spacing=1.35)
-    p4 = draw_rounded_panel(p4, (90, 1755, PAGE_W - 90, 1890), (20, 45, 76, 240), (245, 190, 70, 220), border_width=2, radius=18)
-    d4 = ImageDraw.Draw(p4)
-    draw_wrapped_text(d4, "★ CONVERSE COMIGO: Qual música ou canção deixa a sua família mais alegre quando vocês vencem um dia difícil?", 120, 1785, PAGE_W - 240, f_box_body, fill=(254, 240, 138))
-    p4_rgb = p4.convert("RGB")
-    draw_page_footer(p4_rgb, 36, "VOLUME 3  •  CAPÍTULO 4: A TRAVESSIA DO MAR", dark_mode=True)
-    pages.append(("vol3_p04_travessia_mar.png", p4_rgb))
+    draw_wrapped_text(d5, t4, 90, 1235, PAGE_W - 180, f_body, fill=(248, 250, 252), line_spacing=1.35)
+    p5 = draw_rounded_panel(p5, (90, 1755, PAGE_W - 90, 1890), (20, 45, 76, 240), (245, 190, 70, 220), border_width=2, radius=18)
+    d5 = ImageDraw.Draw(p5)
+    draw_wrapped_text(d5, "» CONVERSE COMIGO: Qual música ou canção deixa a sua família mais alegre quando vocês vencem um dia difícil?", 120, 1785, PAGE_W - 240, f_box_body, fill=(254, 240, 138))
+    p5_rgb = p5.convert("RGB")
+    draw_page_footer(p5_rgb, 38, "VOLUME 3  •  CAPÍTULO 4: A TRAVESSIA DO MAR", dark_mode=True)
+    pages.append(("vol3_p05_travessia_mar.png", p5_rgb))
+
+    # Pág. 6: Capítulo 5 — O Pão do Céu, a Água da Rocha e a Montanha da Luz
+    p6 = Image.new("RGBA", (PAGE_W, PAGE_H), (253, 251, 247, 255))
+    sinai_im = Image.open(os.path.join(ilus_dir, "vol3_cap5_pao_do_ceu_sinai.jpg")).convert("RGB")
+    p6.paste(crop_and_resize(sinai_im, PAGE_W - 140, 1020), (70, 70))
+    d6 = ImageDraw.Draw(p6)
+    d6.rectangle([70, 70, PAGE_W - 70, 1090], outline=(180, 83, 9), width=4)
+    draw_wrapped_text(d6, "CAPÍTULO 5  •  O PÃO DO CÉU E A MONTANHA DA LUZ", 90, 1125, PAGE_W - 180, f_h2, fill=(146, 64, 14))
+    draw_wrapped_text(d6, "Base Bíblica: Êxodo 16–20 (O Maná, a Água da Rocha e as Dez Palavras no Sinai)", 90, 1180, PAGE_W - 180, f_ref, fill=(30, 58, 138))
+    t6 = (
+        "No deserto, a Presença Divina nunca deixou faltar cuidado: a cada manhã, o chão amanhecia coberto pelo maná — floquinhos brancos doces como mel — e da rocha seca brotou água fresca para matar a sede das crianças e dos rebanhos!\n\n"
+        "Ao pé do monte Sinai coroado de luz dourada e safira, o povo recebeu as Dez Palavras da Vida: leis de amor para honrar a Deus, respeitar os pais, dizer a verdade e proteger o próximo."
+    )
+    draw_wrapped_text(d6, t6, 90, 1235, PAGE_W - 180, f_body, fill=(41, 37, 36), line_spacing=1.35)
+    p6 = draw_rounded_panel(p6, (90, 1755, PAGE_W - 90, 1890), (254, 243, 199, 255), (217, 119, 6, 255), border_width=2, radius=18)
+    d6 = ImageDraw.Draw(p6)
+    draw_wrapped_text(d6, "» VOCÊ PERCEBEU? As Dez Palavras de Êxodo 20 não foram dadas para prender o povo, mas para ensinar um povo recém-liberto a viver em paz e justiça!", 120, 1780, PAGE_W - 240, f_box_body, fill=(146, 64, 14))
+    p6_rgb = p6.convert("RGB")
+    draw_page_footer(p6_rgb, 48, "VOLUME 3  •  CAPÍTULO 5: O PÃO DO CÉU E O SINAI", dark_mode=False)
+    pages.append(("vol3_p06_pao_do_ceu_sinai.png", p6_rgb))
+
+    # Pág. 7: Capítulo 6 — O Horizonte da Terra Prometida
+    p7 = Image.new("RGBA", (PAGE_W, PAGE_H), (253, 251, 247, 255))
+    nebo_im = Image.open(os.path.join(ilus_dir, "vol3_cap6_terra_prometida.jpg")).convert("RGB")
+    p7.paste(crop_and_resize(nebo_im, PAGE_W - 140, 1020), (70, 70))
+    d7 = ImageDraw.Draw(p7)
+    d7.rectangle([70, 70, PAGE_W - 70, 1090], outline=(101, 163, 13), width=4)
+    draw_wrapped_text(d7, "CAPÍTULO 6  •  O HORIZONTE DA TERRA PROMETIDA", 90, 1125, PAGE_W - 180, f_h2, fill=(63, 98, 18))
+    draw_wrapped_text(d7, "Base Bíblica: Números 13–14; Deuteronômio 31 e 34 (Moisés e Josué no Monte Nebo)", 90, 1180, PAGE_W - 180, f_ref, fill=(180, 83, 9))
+    t7 = (
+        "Depois de quarenta anos de aprendizado pelo deserto, Moisés subiu ao topo do monte Nebo ao lado do jovem Josué. Lá de cima, sob um arco luminoso de esperança, contemplou o vale do rio Jordão e os olivais verdejantes da Terra Prometida.\n\n"
+        "— Seja forte e corajoso, Josué! — abençoou Moisés com o coração em paz. — A Luz do Senhor irá adiante de vocês, e Ele jamais os deixará!"
+    )
+    draw_wrapped_text(d7, t7, 90, 1235, PAGE_W - 180, f_body, fill=(41, 37, 36), line_spacing=1.35)
+    p7 = draw_rounded_panel(p7, (90, 1755, PAGE_W - 90, 1890), (236, 252, 203, 255), (101, 163, 13, 255), border_width=2, radius=18)
+    d7 = ImageDraw.Draw(p7)
+    draw_wrapped_text(d7, "» O QUE VOCÊ FARIA? Moisés passou a missão adiante encorajando Josué. Como você pode encorajar um amigo que está começando um novo desafio?", 120, 1780, PAGE_W - 240, f_box_body, fill=(54, 83, 20))
+    p7_rgb = p7.convert("RGB")
+    draw_page_footer(p7_rgb, 58, "VOLUME 3  •  CAPÍTULO 6: O HORIZONTE DA PROMESSA", dark_mode=False)
+    pages.append(("vol3_p07_terra_prometida.png", p7_rgb))
+
+    # Pág. 8: Pequena Grande Descoberta + Bíblia de Personagens do Volume 3 (Moisés e Miriam)
+    p8 = Image.new("RGBA", (PAGE_W, PAGE_H), (253, 251, 247, 255))
+    d8 = ImageDraw.Draw(p8)
+    draw_wrapped_text(d8, "PEQUENA GRANDE DESCOBERTA  •  VOLUME 3", 90, 75, PAGE_W - 180, f_h2, fill=(146, 64, 14), align="center")
+    p8 = draw_rounded_panel(p8, (80, 150, PAGE_W - 80, 620), (254, 243, 199, 255), (217, 119, 6, 255), border_width=3, radius=22)
+    d8 = ImageDraw.Draw(p8)
+    draw_wrapped_text(d8, "1. ARQUEOLOGIA DO EGITO E DO DESERTO DO SINAI", 120, 178, PAGE_W - 240, f_box_title, fill=(146, 64, 14))
+    arq_txt = (
+        "• Tijolos de Barro e Palha: Escavações arqueológicas no Delta do Nilo (como em Pi-Ramessés) mostram que os antigos armazéns egípcios eram erguidos com milhões de tijolos de lama do Nilo misturada com palha picada e secos ao sol, exatamente como descreve Êxodo 5!\n"
+        "• O Tamborim de Miriam (Tof): Na antiguidade do Oriente Próximo, o 'tof' era um instrumento circular de madeira esticado com pele de animal, tocado pelas mulheres em celebrações de vitória e gratidão.\n"
+        "• O Tabernáculo Portátil: A tenda sagrada do deserto usava madeira de acácia (árvore típica do Sinai), linho trançado e cobres polidos."
+    )
+    draw_wrapped_text(d8, arq_txt, 120, 232, PAGE_W - 240, f_box_body, fill=(41, 37, 36), line_spacing=1.38)
+
+    draw_wrapped_text(d8, "2. BÍBLIA DE PERSONAGENS DO VOLUME 3: MIRIAM E MOISÉS", 90, 660, PAGE_W - 180, f_box_title, fill=(30, 58, 138))
+    sheet_mm = Image.open(os.path.join(BASE_DIR, "04-Biblia-de-Personagens/char_sheet_moises_miriam.jpg")).convert("RGB").resize((1360, 765), Image.Resampling.LANCZOS)
+    p8.paste(sheet_mm, (120, 715))
+    d8.rectangle([120, 715, 1480, 1480], outline=(180, 83, 9), width=3)
+    leg_mm = (
+        "Reconstrução Histórica Levantina (Volume 3 — Autor: Fabio): À esquerda, a jovem Miriam com túnica de linho cru bordada em azul-turquesa egípcio e seu tamborim de madeira (tof). À direita, Moisés no monte Horebe/Sinai, com pele morena-oliva marcada pelo sol do deserto, túnica de lã tecida, manto terracota, sandálias de couro e cajado de pastor em madeira de acácia."
+    )
+    draw_wrapped_text(d8, leg_mm, 120, 1510, PAGE_W - 240, f_box_body, fill=(28, 25, 23), line_spacing=1.38)
+    p8_rgb = p8.convert("RGB")
+    draw_page_footer(p8_rgb, 64, "VOLUME 3  •  ARQUEOLOGIA E BÍBLIA DE PERSONAGENS", dark_mode=False)
+    pages.append(("vol3_p08_descobertas_e_personagens.png", p8_rgb))
 
     saved = []
     for fname, im in pages:
@@ -317,13 +346,114 @@ def build_vol3_pilot():
         im.save(fp, quality=95)
         saved.append(fp)
         shutil.copy2(fp, os.path.join(BRAIN_DIR, fname))
+        print(f"   Página Volume 3 salva: {fname}")
 
-    # Exportar PDF HD do Piloto do Volume 3
+    # Manter compatibilidade com o nome vol3_p04_travessia_mar.png caso referenciado
+    shutil.copy2(os.path.join(p_dir, "vol3_p05_travessia_mar.png"), os.path.join(p_dir, "vol3_p04_travessia_mar.png"))
+    shutil.copy2(os.path.join(p_dir, "vol3_p05_travessia_mar.png"), os.path.join(BRAIN_DIR, "vol3_p04_travessia_mar.png"))
+
+    # 1. Exportar PDF HD do Volume 3 (Hotmart / Tablet)
     pdf_v3 = os.path.join(BASE_DIR, "12-Exportacoes-Hotmart/A_Grande_Historia_da_Luz_Vol3_Piloto_HD.pdf")
     pil_ims = [Image.open(p).convert("RGB") for p in saved]
     pil_ims[0].save(pdf_v3, "PDF", resolution=200.0, save_all=True, append_images=pil_ims[1:], title="A Grande História da Luz - Vol. 3: O Caminho da Liberdade", author="Fabio")
-    print(f"   Volume 3 Piloto PDF gerado: {pdf_v3}")
+    print(f"   Volume 3 PDF HD gerado: {pdf_v3}")
+
+    # 2. Exportar PDF de Impressão 300 DPI com sangria do Volume 3
+    print_pdf_v3 = os.path.join(BASE_DIR, "13-Edicao-Impressa/A_Grande_Historia_da_Luz_Vol3_Print_300DPI_Bleed.pdf")
+    print_ims = [crop_and_resize(im, 2438, 3075) for im in pil_ims]
+    print_ims[0].save(print_pdf_v3, "PDF", resolution=300.0, save_all=True, append_images=print_ims[1:], title="A Grande História da Luz - Vol. 3 (Print 300 DPI Bleed)", author="Fabio")
+    print(f"   Volume 3 PDF Print 300 DPI gerado: {print_pdf_v3}")
+
+    # 3. Exportar EPUB 3 Fixed-Layout (Amazon KDP) do Volume 3
+    epub_v3 = os.path.join(BASE_DIR, "11-Exportacoes-Kindle/A_Grande_Historia_da_Luz_Vol3_FixedLayout_KDP.epub")
+    with zipfile.ZipFile(epub_v3, "w") as zf:
+        zf.writestr("mimetype", "application/epub+zip", compress_type=zipfile.ZIP_STORED)
+        container_xml = '''<?xml version="1.0" encoding="UTF-8"?>
+<container version="1.0" xmlns="urn:oasis:names:tc:opendocument:xmlns:container">
+  <rootfiles>
+    <rootfile full-path="OEBPS/content.opf" media-type="application/oebps-package+xml"/>
+  </rootfiles>
+</container>'''
+        zf.writestr("META-INF/container.xml", container_xml)
+        manifest_items = []
+        spine_items = []
+        for idx, p_path in enumerate(saved, start=1):
+            img_name = f"page_{idx:02d}.jpg"
+            xhtml_name = f"page_{idx:02d}.xhtml"
+            jpg_temp = p_path.replace(".png", ".jpg")
+            Image.open(p_path).convert("RGB").save(jpg_temp, "JPEG", quality=92)
+            zf.write(jpg_temp, f"OEBPS/images/{img_name}")
+            os.remove(jpg_temp)
+            prop = ' properties="cover-image"' if idx == 1 else ''
+            manifest_items.append(f'    <item id="img{idx:02d}" href="images/{img_name}" media-type="image/jpeg"{prop}/>')
+            manifest_items.append(f'    <item id="page{idx:02d}" href="{xhtml_name}" media-type="application/xhtml+xml"/>')
+            spread_prop = "page-spread-right" if idx == 1 or idx % 2 == 1 else "page-spread-left"
+            spine_items.append(f'    <itemref idref="page{idx:02d}" properties="{spread_prop}"/>')
+            xhtml_content = f'''<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xml:lang="pt-BR">
+<head>
+  <title>Página {idx}</title>
+  <meta name="viewport" content="width=1600, height=2000"/>
+  <style type="text/css">
+    html, body {{ margin: 0; padding: 0; width: 1600px; height: 2000px; overflow: hidden; background-color: #0b132b; }}
+    img {{ width: 1600px; height: 2000px; display: block; }}
+  </style>
+</head>
+<body>
+  <img src="images/{img_name}" alt="Página {idx}"/>
+</body>
+</html>'''
+            zf.writestr(f"OEBPS/{xhtml_name}", xhtml_content)
+
+        nav_xhtml = '''<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xml:lang="pt-BR">
+<head><title>Sumário</title></head>
+<body>
+  <nav epub:type="toc" id="toc">
+    <h1>A Grande História da Luz — Volume 3: O Caminho da Liberdade</h1>
+    <ol>
+      <li><a href="page_01.xhtml">Capa — O Caminho da Liberdade</a></li>
+      <li><a href="page_02.xhtml">Capítulo 1 — O Pequeno Barco de Papiro no Nilo</a></li>
+      <li><a href="page_03.xhtml">Capítulo 2 — O Arbusto que Brilhava Sem Queimar</a></li>
+      <li><a href="page_04.xhtml">Capítulo 3 — A Noite da Esperança e da Liberdade</a></li>
+      <li><a href="page_05.xhtml">Capítulo 4 — Um Caminho no Meio do Mar</a></li>
+      <li><a href="page_06.xhtml">Capítulo 5 — O Pão do Céu e a Montanha da Luz</a></li>
+      <li><a href="page_07.xhtml">Capítulo 6 — O Horizonte da Terra Prometida</a></li>
+      <li><a href="page_08.xhtml">Arqueologia e Bíblia de Personagens (Miriam e Moisés)</a></li>
+    </ol>
+  </nav>
+</body>
+</html>'''
+        zf.writestr("OEBPS/nav.xhtml", nav_xhtml)
+
+        opf_content = f'''<?xml version="1.0" encoding="UTF-8"?>
+<package xmlns="http://www.idpf.org/2007/opf" version="3.0" unique-identifier="BookId" prefix="rendition: http://www.idpf.org/vocab/rendition/#">
+  <metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <dc:identifier id="BookId">urn:uuid:a-grande-historia-da-luz-vol3-2026</dc:identifier>
+    <dc:title>O Caminho da Liberdade — O príncipe do Nilo e a travessia do deserto (A Grande História da Luz - Vol. 3)</dc:title>
+    <dc:language>pt-BR</dc:language>
+    <dc:creator>Fabio</dc:creator>
+    <meta property="dcterms:modified">2026-11-13T16:45:00Z</meta>
+    <meta property="rendition:layout">pre-paginated</meta>
+    <meta property="rendition:orientation">portrait</meta>
+    <meta property="rendition:spread">landscape</meta>
+    <meta name="fixed-layout" content="true"/>
+    <meta name="original-resolution" content="1600x2000"/>
+    <meta name="book-type" content="children"/>
+  </metadata>
+  <manifest>
+    <item id="nav" href="nav.xhtml" media-type="application/xhtml+xml" properties="nav"/>
+{chr(10).join(manifest_items)}
+  </manifest>
+  <spine>
+{chr(10).join(spine_items)}
+  </spine>
+</package>'''
+        zf.writestr("OEBPS/content.opf", opf_content)
+    print(f"   Volume 3 EPUB 3 Fixed-Layout KDP gerado: {epub_v3}")
 
 if __name__ == "__main__":
-    build_vol3_pilot()
+    build_vol3_pages_and_exports()
     print("VOLUME 3 CONCLUÍDO COM SUCESSO!")
