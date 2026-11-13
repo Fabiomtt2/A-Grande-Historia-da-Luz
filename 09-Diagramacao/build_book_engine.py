@@ -220,7 +220,8 @@ def build_covers():
     f_series = load_font("cinzel", 34)
     f_title = load_font("cinzel", 96)
     f_sub = load_font("nunito", 40)
-    f_tag = load_font("atkinson_bold", 28)
+    f_tag = load_font("atkinson_bold", 26)
+    f_author = load_font("cinzel", 30)
 
     configs = [
         ("capa_conceito_1_cosmica_base.jpg", "capa_final_1_cosmica.png", "dark_top"),
@@ -276,10 +277,11 @@ def build_covers():
             draw_wrapped_text(cdraw, "FAÇA-SE A LUZ", 80, 178, PAGE_W - 160, f_title, fill=title_color, align="center", shadow=use_shadow)
             draw_wrapped_text(cdraw, "O começo de todas as histórias", 120, 305, PAGE_W - 240, f_sub, fill=sub_color, align="center", shadow=use_shadow)
 
-        # Rodapé da capa (Selo Volume 1 + Subtítulo da Coleção)
-        cover = draw_rounded_panel(cover, (280, PAGE_H - 210, PAGE_W - 280, PAGE_H - 85), (12, 22, 48, 215), (245, 190, 70, 230), border_width=3, radius=24)
+        # Rodapé da capa (Selo Volume 1 + Subtítulo da Coleção + Autor Fabio)
+        cover = draw_rounded_panel(cover, (220, PAGE_H - 235, PAGE_W - 220, PAGE_H - 70), (12, 22, 48, 222), (245, 190, 70, 235), border_width=3, radius=24)
         cdraw = ImageDraw.Draw(cover)
-        draw_wrapped_text(cdraw, "VOLUME 1  •  A BÍBLIA ILUSTRADA PARA PEQUENOS EXPLORADORES", 300, PAGE_H - 166, PAGE_W - 600, f_tag, fill=(254, 240, 138, 255), align="center", shadow=False)
+        draw_wrapped_text(cdraw, "VOLUME 1  •  A BÍBLIA ILUSTRADA PARA PEQUENOS EXPLORADORES", 240, PAGE_H - 208, PAGE_W - 480, f_tag, fill=(254, 240, 138, 255), align="center", shadow=False)
+        draw_wrapped_text(cdraw, "FABIO", 240, PAGE_H - 142, PAGE_W - 480, f_author, fill=(255, 255, 255, 255), align="center", shadow=False)
 
         out_path = os.path.join(vis_dir, out_file)
         cover.convert("RGB").save(out_path, quality=95)
@@ -297,8 +299,8 @@ def build_covers():
     draw_wrapped_text(bdraw, "ENTREGA 3 — COMPARATIVO DAS 3 PROPOSTAS DE CAPA (TAMANHO REAL vs. MINIATURA 120 PX)", 60, 36, board_w - 120, f_btitle, fill=(253, 224, 71), align="center")
 
     labels = [
-        ("OPÇÃO 1 (OFICIAL RECOMENDADA)", "Cósmica e Contemplativa (Fiat Lux)"),
-        ("OPÇÃO 2 (ALTERNATIVA)", "Aventura Infantil Cinematográfica"),
+        ("OPÇÃO 1 (ALTERNATIVA)", "Cósmica e Contemplativa (Fiat Lux)"),
+        ("OPÇÃO 2 (CAPA OFICIAL ESCOLHIDA)", "Aventura Infantil Cinematográfica — Autor: Fabio"),
         ("OPÇÃO 3 (EDIÇÃO DE LUXO)", "Livro Ilustrado Pictórico / Mandala"),
     ]
     for idx, (fname, cov_img) in enumerate(generated_covers):
@@ -323,16 +325,16 @@ def build_covers():
     board = draw_rounded_panel(board, (80, 980, board_w - 80, 1430), (30, 41, 59, 240), (245, 190, 70, 200), border_width=2, radius=20).convert("RGB")
     bdraw = ImageDraw.Draw(board)
     analise_txt = (
-        "AVALIAÇÃO TÉCNICA E COMERCIAL (TESTE DE VITRINE KINDLE / HOTMART EM 120 PX):\n"
-        "• Opção 1 (Cósmica e Contemplativa — VENCEDORA): Apresenta o maior contraste tonal entre a zona superior escura (onde o título 'FAÇA-SE A LUZ' brilha em ouro com legibilidade imediata mesmo em 120 px) e a espiral dourada-safira que conduz o olhar até as águas primordiais. Comunica instantaneamente o conceito espiritual não antropomórfico (Fiat Lux).\n"
-        "• Opção 2 (Aventura Infantil): Excelente conexão empática imediata com crianças de 6 a 8 anos pelas duas crianças levantinas em contraluz; recomendada como criativo de campanha publicitária e contracapa promocional.\n"
-        "• Opção 3 (Pictórica / Mandala): Estética artesanal sofisticada de livro de arte; recomendada para a Folha de Rosto / Guarda Ilustrada e futura edição física em capa dura."
+        "DECISÃO EDITORIAL CONSOLIDADA PELO AUTOR (FABIO — PUBLICAÇÃO INDEPENDENTE):\n"
+        "• Opção 2 (Aventura Infantil Cinematográfica — CAPA OFICIAL ESCOLHIDA): Selecionada pelo autor por comunicar imediatamente o universo infantil, gerando identificação instantânea com as crianças de 4 a 10 anos por meio dos dois pequenos exploradores contemplando o arco luminoso da criação.\n"
+        "• Opção 1 (Cósmica e Contemplativa): Preservada para abertura de capítulo e materiais complementares.\n"
+        "• Opção 3 (Pictórica / Mandala): Preservada como medalhão de Folha de Rosto e apresentação interna."
     )
     draw_wrapped_text(bdraw, analise_txt, 115, 1015, board_w - 230, f_blabel, fill=(248, 250, 252), line_spacing=1.42)
     board_path = os.path.join(vis_dir, "Entrega3_Comparativo_Capas_120px.png")
     board.save(board_path, quality=95)
     shutil.copy2(board_path, os.path.join(BRAIN_DIR, "Entrega3_Comparativo_Capas_120px.png"))
-    shutil.copy2(os.path.join(vis_dir, "capa_final_1_cosmica.png"), os.path.join(BRAIN_DIR, "capa_final_1_cosmica.png"))
+    shutil.copy2(os.path.join(vis_dir, "capa_final_2_aventura.png"), os.path.join(BRAIN_DIR, "capa_final_2_aventura.png"))
     print("   Painel comparativo de capas salvo.")
 
 def draw_page_footer(img, page_num, chapter_label="VOLUME 1  •  FAÇA-SE A LUZ", dark_mode=True):
@@ -366,9 +368,9 @@ def build_pilot_pages():
     pages = []
 
     # =========================================================================
-    # PÁGINA 1 DO PILOTO: CAPA OFICIAL (Conceito 1 — Cósmica e Contemplativa)
+    # PÁGINA 1 DO PILOTO: CAPA OFICIAL ESCOLHIDA PELO AUTOR (Conceito 2 — Aventura Infantil)
     # =========================================================================
-    p1 = Image.open(os.path.join(vis_dir, "capa_final_1_cosmica.png")).convert("RGB")
+    p1 = Image.open(os.path.join(vis_dir, "capa_final_2_aventura.png")).convert("RGB")
     pages.append(("piloto_p01_capa.png", p1))
 
     # =========================================================================
@@ -382,7 +384,8 @@ def build_pilot_pages():
     d2 = ImageDraw.Draw(p2)
     d2.rectangle([90, 80, PAGE_W - 90, 840], outline=(180, 83, 9), width=4)
 
-    draw_wrapped_text(d2, "BEM-VINDO, PEQUENO EXPLORADOR DA LUZ!", 100, 880, PAGE_W - 200, f_h2, fill=(146, 64, 14), align="center")
+    draw_wrapped_text(d2, "BEM-VINDO, PEQUENO EXPLORADOR DA LUZ!", 100, 865, PAGE_W - 200, f_h2, fill=(146, 64, 14), align="center")
+    draw_wrapped_text(d2, "Autor: Fabio  •  Edição Autônoma Independente", 100, 918, PAGE_W - 200, f_ref, fill=(30, 58, 138), align="center")
     intro_text = (
         "Você está prestes a abrir um livro diferente. Aqui, cada página é uma janela para tempos muito antigos, onde o Universo começou a brilhar, rios cristalinos cortavam jardins perfumados e pessoas como nós aprenderam a fazer grandes escolhas.\n\n"
         "Neste livro, Deus nunca é desenhado como uma pessoa de barba branca sentada nas nuvens — porque Ele é muito maior do que qualquer corpo! Ele é a própria Origem, o Amor e a Presença Luminosa de onde nasceu toda a vida: FAÇA-SE A LUZ!"
@@ -672,8 +675,8 @@ def export_pdfs_and_epub(page_paths):
         resolution=200.0,
         save_all=True,
         append_images=pil_images[1:],
-        title="A Grande História da Luz - Vol. 1: Faça-se a Luz (Piloto Ilustrado)",
-        author="Argon Editorial Studio"
+        title="A Grande História da Luz - Vol. 1: Faça-se a Luz",
+        author="Fabio"
     )
     print(f"   PDF Digital HD gerado: {hotmart_pdf}")
 
@@ -689,7 +692,7 @@ def export_pdfs_and_epub(page_paths):
         save_all=True,
         append_images=print_images[1:],
         title="A Grande História da Luz - Vol. 1 (Print 300 DPI with Bleed)",
-        author="Argon Editorial Studio"
+        author="Fabio"
     )
     print(f"   PDF Impressão 300 DPI gerado: {print_pdf}")
 
@@ -764,7 +767,7 @@ def export_pdfs_and_epub(page_paths):
     <dc:identifier id="BookId">urn:uuid:a-grande-historia-da-luz-vol1-2026</dc:identifier>
     <dc:title>Faça-se a Luz — O começo de todas as histórias (A Grande História da Luz - Vol. 1)</dc:title>
     <dc:language>pt-BR</dc:language>
-    <dc:creator>Argon Editorial Studio</dc:creator>
+    <dc:creator>Fabio</dc:creator>
     <meta property="dcterms:modified">2026-11-13T12:00:00Z</meta>
     <meta property="rendition:layout">pre-paginated</meta>
     <meta property="rendition:orientation">portrait</meta>
