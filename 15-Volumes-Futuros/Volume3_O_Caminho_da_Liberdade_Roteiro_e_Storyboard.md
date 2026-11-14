@@ -2,7 +2,7 @@
 ## Subtítulo: O príncipe do Nilo e a travessia do deserto (Êxodo, Números e Deuteronômio)
 
 **Coleção:** *A Grande História da Luz — A Bíblia ilustrada para pequenos exploradores*  
-**Autor:** Fabio (Edição Autônoma / Publicação Independente)  
+**Autor:** Fábio Motta e Silva (Edição Autônoma / Publicação Independente)  
 **Volume:** Volume 3 (eBook 3)  
 **Base Bíblica:** Êxodo 1–20; Números 13–14, 20; Deuteronômio 6, 34  
 **Público-Alvo:** 6 a 10 anos (leitura autônoma) e 4 a 6 anos (leitura compartilhada)
@@ -18,7 +18,7 @@
 
 ## ESTRUTURA DOS 6 CAPÍTULOS DO VOLUME 3 (64 PÁGINAS)
 
-- **Páginas 1 a 7:** Capa (padrão *Aventura Infantil Cinematográfica* com Miriam e o pequeno Moisés às margens do Nilo sob o arco de Luz), Folha de Rosto (`Autor: Fabio`), Mapa Ilustrado do Egito ao Monte Sinai e Guia aos Pais.
+- **Páginas 1 a 7:** Capa (padrão *Aventura Infantil Cinematográfica* com Miriam e o pequeno Moisés às margens do Nilo sob o arco de Luz), Folha de Rosto (`Autor: Fábio Motta e Silva`), Mapa Ilustrado do Egito ao Monte Sinai e Guia aos Pais.
 - **Capítulo 1 (Págs. 8–17):** *O Pequeno Barco de Papiro no Grande Rio* (Êxodo 1–2)
 - **Capítulo 2 (Págs. 18–25):** *O Arbusto que Brilhava Sem Queimar* (Êxodo 3–4)
 - **Capítulo 3 (Págs. 26–35):** *Corações Duros e a Noite da Grande Esperança* (Êxodo 5–12)

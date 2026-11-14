@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A Grande História da Luz — Coleção Bíblica Ilustrada 3D | Fábio Motta e Silva</title>
+  <style>
+    :root {
+      --bg-deep: #0b132b;
+      --bg-card: #162244;
+      --gold: #fcd34d;
+      --gold-dark: #d97706;
+      --cyan: #38bdf8;
+      --text-light: #f8fafc;
+      --text-muted: #cbd5e1;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at top, #172a5a 0%, var(--bg-deep) 65%);
+      color: var(--text-light);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+    header {
+      text-align: center;
+      padding: 3.5rem 1.5rem 2.5rem;
+      border-bottom: 2px solid rgba(252, 211, 77, 0.25);
+      background: linear-gradient(180deg, rgba(8, 15, 38, 0.85) 0%, rgba(11, 19, 43, 0.4) 100%);
+    }
+    .badge {
+      display: inline-block;
+      background: rgba(252, 211, 77, 0.15);
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      padding: 0.35rem 1rem;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    h1 {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      color: var(--gold);
+      letter-spacing: 0.04em;
+      margin-bottom: 0.5rem;
+      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+    }
+    .subtitle {
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      max-width: 760px;
+      margin: 0 auto 1rem;
+    }
+    .author-tag {
+      font-size: 1.05rem;
+      color: #ffffff;
+      font-weight: 600;
+    }
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem;
+    }
+    .books-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3.5rem;
+    }
+    .book-card {
+      background: var(--bg-card);
+      border: 2px solid rgba(252, 211, 77, 0.3);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.45);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.25s ease, border-color 0.25s ease;
+    }
+    .book-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--gold);
+    }
+    .book-cover-wrap {
+      background: #070d1f;
+      padding: 1.25rem;
+      text-align: center;
+    }
+    .book-cover-wrap img {
+      width: 100%;
+      max-width: 300px;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.65);
+      border: 2px solid rgba(252, 211, 77, 0.4);
+    }
+    .book-body {
+      padding: 1.5rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .vol-label {
+      color: var(--cyan);
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .book-title {
+      font-size: 1.5rem;
+      color: var(--gold);
+      margin: 0.25rem 0 0.5rem;
+    }
+    .book-desc {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 1.25rem;
+      flex: 1;
+    }
+    .btn-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .btn {
+      display: block;
+      text-align: center;
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.92rem;
+      transition: opacity 0.2s ease, transform 0.15s ease;
+      cursor: pointer;
+      border: none;
+    }
+    .btn:hover { opacity: 0.92; transform: scale(1.01); }
+    .btn-primary {
+      background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%);
+      color: #0b132b;
+    }
+    .btn-secondary {
+      background: rgba(56, 189, 248, 0.15);
+      border: 1px solid var(--cyan);
+      color: #e0f2fe;
+    }
+    .btn-outline {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: var(--text-light);
+    }
+    .reader-section {
+      background: var(--bg-card);
+      border: 2px solid rgba(252, 211, 77, 0.35);
+      border-radius: 22px;
+      padding: 2rem;
+      margin-top: 2rem;
+    }
+    .reader-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      padding-bottom: 1rem;
+    }
+    .reader-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: center;
+    }
+    select, .nav-btn {
+      background: #0b132b;
+      color: var(--gold);
+      border: 1px solid var(--gold);
+      padding: 0.6rem 1.1rem;
+      border-radius: 10px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 0.95rem;
+    }
+    .nav-btn:hover {
+      background: var(--gold);
+      color: #0b132b;
+    }
+    .page-stage {
+      text-align: center;
+      background: #060b19;
+      padding: 1.5rem;
+      border-radius: 16px;
+      min-height: 500px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .page-stage img {
+      max-width: 100%;
+      max-height: 82vh;
+      border-radius: 10px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+      border: 2px solid rgba(252, 211, 77, 0.3);
+    }
+    .page-counter {
+      margin-top: 1rem;
+      font-weight: 700;
+      color: var(--gold);
+      font-size: 1.05rem;
+    }
+    footer {
+      text-align: center;
+      padding: 2.5rem 1rem;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      margin-top: 3rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="badge">Coleção Ilustrada em 3D • 4 a 10 Anos (Dupla Camada)</div>
+    <h1>A GRANDE HISTÓRIA DA LUZ</h1>
+    <p class="subtitle">A Bíblia Ilustrada para Pequenos Exploradores — Fidelidade Bíblica, Reconstrução Histórica e Estética Cinematográfica 3D (Fiat Lux)</p>
+    <p class="author-tag">Autor: Fábio Motta e Silva • Publicação Independente (24 Páginas por Volume)</p>
+  </header>
+
+  <main class="container">
+    <section class="books-grid">
+      <!-- Volume 1 -->
+      <article class="book-card">
+        <div class="book-cover-wrap">
+          <img src="03-Identidade-Visual/capa_final_2_aventura.png" alt="Capa Volume 1 - Faça-se a Luz" />
+        </div>
+        <div class="book-body">
+          <span class="vol-label">Volume 1 • 24 Páginas Ilustradas</span>
+          <h2 class="book-title">Faça-se a Luz</h2>
+          <p class="book-desc">O começo de todas as histórias (Gênesis 1 a 11): O despertar do Cosmos, o Jardim das Águas Vivas, a escolha no Éden, Caim e Abel, a Grande Arca de Noé e o Zigurate de Babel.</p>
+          <div class="btn-group">
+            <button class="btn btn-primary" onclick="loadBook('vol1')">📖 Ler Volume 1 Online (24 Páginas)</button>
+            <a class="btn btn-secondary" href="12-Exportacoes-Hotmart/A_Grande_Historia_da_Luz_Vol1_Piloto_HD.pdf" target="_blank">📥 Baixar PDF Digital HD (Hotmart)</a>
+            <a class="btn btn-outline" href="11-Exportacoes-Kindle/A_Grande_Historia_da_Luz_Vol1_FixedLayout_KDP.epub" download>📱 Baixar EPUB 3 (Amazon Kindle KDP)</a>
+            <a class="btn btn-outline" href="13-Edicao-Impressa/A_Grande_Historia_da_Luz_Vol1_Print_300DPI_Bleed.pdf" target="_blank">🖨️ Baixar PDF Gráfica 300 DPI (Com Sangria)</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Volume 2 -->
+      <article class="book-card">
+        <div class="book-cover-wrap">
+          <img src="15-Volumes-Futuros/Volume-2-As-Estrelas-da-Promessa/ilustracoes/vol2_capa_oficial_aventura.png" alt="Capa Volume 2 - As Estrelas da Promessa" />
+        </div>
+        <div class="book-body">
+          <span class="vol-label">Volume 2 • 24 Páginas Ilustradas</span>
+          <h2 class="book-title">As Estrelas da Promessa</h2>
+          <p class="book-desc">Os amigos que caminharam olhando para o céu (Gênesis 12 a 50): O chamado de Abraão e Sara, o sorriso do bebê Isaque, a Escada de Luz de Jacó, a túnica colorida de José e o abraço do perdão no Egito.</p>
+          <div class="btn-group">
+            <button class="btn btn-primary" onclick="loadBook('vol2')">📖 Ler Volume 2 Online (24 Páginas)</button>
+            <a class="btn btn-secondary" href="12-Exportacoes-Hotmart/A_Grande_Historia_da_Luz_Vol2_Piloto_HD.pdf" target="_blank">📥 Baixar PDF Digital HD (Hotmart)</a>
+            <a class="btn btn-outline" href="11-Exportacoes-Kindle/A_Grande_Historia_da_Luz_Vol2_FixedLayout_KDP.epub" download>📱 Baixar EPUB 3 (Amazon Kindle KDP)</a>
+            <a class="btn btn-outline" href="13-Edicao-Impressa/A_Grande_Historia_da_Luz_Vol2_Print_300DPI_Bleed.pdf" target="_blank">🖨️ Baixar PDF Gráfica 300 DPI (Com Sangria)</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Volume 3 -->
+      <article class="book-card">
+        <div class="book-cover-wrap">
+          <img src="15-Volumes-Futuros/Volume-3-O-Caminho-da-Liberdade/ilustracoes/vol3_capa_oficial_aventura.png" alt="Capa Volume 3 - O Caminho da Liberdade" />
+        </div>
+        <div class="book-body">
+          <span class="vol-label">Volume 3 • 24 Páginas Ilustradas</span>
+          <h2 class="book-title">O Caminho da Liberdade</h2>
+          <p class="book-desc">O príncipe do Nilo e a travessia do deserto (Êxodo a Deuteronômio): O cestinho de Moisés e Miriã no Nilo, a Sarça de Luz no Horebe, a Páscoa, a Travessia do Mar, o Maná no Sinai e o Monte Nebo.</p>
+          <div class="btn-group">
+            <button class="btn btn-primary" onclick="loadBook('vol3')">📖 Ler Volume 3 Online (24 Páginas)</button>
+            <a class="btn btn-secondary" href="12-Exportacoes-Hotmart/A_Grande_Historia_da_Luz_Vol3_Piloto_HD.pdf" target="_blank">📥 Baixar PDF Digital HD (Hotmart)</a>
+            <a class="btn btn-outline" href="11-Exportacoes-Kindle/A_Grande_Historia_da_Luz_Vol3_FixedLayout_KDP.epub" download>📱 Baixar EPUB 3 (Amazon Kindle KDP)</a>
+            <a class="btn btn-outline" href="13-Edicao-Impressa/A_Grande_Historia_da_Luz_Vol3_Print_300DPI_Bleed.pdf" target="_blank">🖨️ Baixar PDF Gráfica 300 DPI (Com Sangria)</a>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- Leitor Digital Interativo -->
+    <section class="reader-section" id="leitor">
+      <div class="reader-header">
+        <div>
+          <h3 id="reader-title" style="color: var(--gold); font-size: 1.4rem;">Leitor Interativo — Volume 1: Faça-se a Luz</h3>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">Autor: Fábio Motta e Silva • Use os botões abaixo ou as setas do teclado para folhear as 24 páginas</p>
+        </div>
+        <div class="reader-controls">
+          <select id="book-select" onchange="loadBook(this.value)">
+            <option value="vol1">Volume 1 — Faça-se a Luz (24 págs.)</option>
+            <option value="vol2">Volume 2 — As Estrelas da Promessa (24 págs.)</option>
+            <option value="vol3">Volume 3 — O Caminho da Liberdade (24 págs.)</option>
+          </select>
+          <button class="nav-btn" onclick="prevPage()">⬅ Página Anterior</button>
+          <button class="nav-btn" onclick="nextPage()">Próxima Página ➡</button>
+        </div>
+      </div>
+      <div class="page-stage">
+        <img id="page-img" src="09-Diagramacao/paginas_piloto/piloto_p01_capa.png" alt="Página do Livro" />
+        <div class="page-counter" id="page-counter">Página 01 de 24</div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© <strong>Fábio Motta e Silva</strong> — Coleção <em>A Grande História da Luz: A Bíblia Ilustrada para Pequenos Exploradores</em>. Publicação Independente.</p>
+  </footer>
+
+  <script>
+    const BOOKS = {
+      vol1: {
+        title: "Leitor Interativo — Volume 1: Faça-se a Luz",
+        pages: [
+          "09-Diagramacao/paginas_piloto/piloto_p01_capa.png",
+          "09-Diagramacao/paginas_piloto/piloto_p02_apresentacao.png",
+          "09-Diagramacao/paginas_piloto/piloto_p03_mapa_sumario.png",
+          "09-Diagramacao/paginas_piloto/piloto_p03_abismo.png",
+          "09-Diagramacao/paginas_piloto/piloto_p04_fiat_lux_esq.png",
+          "09-Diagramacao/paginas_piloto/piloto_p05_fiat_lux_dir.png",
+          "09-Diagramacao/paginas_piloto/piloto_p06_ceu_mar_terra.png",
+          "09-Diagramacao/paginas_piloto/piloto_p07_estrelas_aves.png",
+          "09-Diagramacao/paginas_piloto/piloto_p08_animais_jardim.png",
+          "09-Diagramacao/paginas_piloto/piloto_p09_humanidade_sopro.png",
+          "09-Diagramacao/paginas_piloto/piloto_p10_nomes_cuidadores.png",
+          "09-Diagramacao/paginas_piloto/piloto_p11_descanso_luz.png",
+          "09-Diagramacao/paginas_piloto/piloto_p13_cap2_jardim_eden.png",
+          "09-Diagramacao/paginas_piloto/piloto_p14_cap2_dialogos.png",
+          "09-Diagramacao/paginas_piloto/piloto_p14_cap3_escolha_jardim.png",
+          "09-Diagramacao/paginas_piloto/piloto_p16_cap3_dialogos.png",
+          "09-Diagramacao/paginas_piloto/piloto_p15_cap4_caim_abel.png",
+          "09-Diagramacao/paginas_piloto/piloto_p18_cap4_dialogos.png",
+          "09-Diagramacao/paginas_piloto/piloto_p16_cap5_arca_noe.png",
+          "09-Diagramacao/paginas_piloto/piloto_p20_cap5_dialogos.png",
+          "09-Diagramacao/paginas_piloto/piloto_p17_cap6_torre_babel.png",
+          "09-Diagramacao/paginas_piloto/piloto_p22_cap6_dialogos.png",
+          "09-Diagramacao/paginas_piloto/piloto_p12_descobertas_e_personagens.png",
+          "09-Diagramacao/paginas_piloto/piloto_p24_contracapa.png"
+        ]
+      },
+      vol2: {
+        title: "Leitor Interativo — Volume 2: As Estrelas da Promessa",
+        pages: [
+          "15-Volumes-Futuros/Volume-2-As-Estrelas-da-Promessa/paginas_piloto/vol2_p01_capa.png",
+          "15-Volumes-Futuros/Volume-2-As-Estrelas-da-Promessa/paginas_piloto/vol2_p02_folha_rosto.png",
+          "15-Volumes-Futuros/Volume-2-As-Estrelas-da-Promessa/paginas_piloto/vol2_p03_mapa_sumario.png",
+          "15-Volumes-Futuros/Volume-2-As-Estrelas-da-Promessa/paginas_piloto/vol2_p04_cap1_estrelas.png",
+          "15-Volumes-Futuros/Volume-2-As-Estrelas-da-Promessa/paginas_piloto/vol2_p05_cap1_camadas.png",
+          "15-Volumes-Futuros/Volume-2-As-Estrelas-da-Promessa/paginas_piloto/vol2_p06_cap1_descobertas.png",
+          "15-Volumes-Futuros/Volume-2-As-Estrelas-da-Promessa/paginas_piloto/vol2_p07_cap2_isaque.png",
+          "15-Volumes-Futuros/Volume-2-As-Estrelas-da-Promessa/paginas_piloto/vol2_p08_cap2_camadas.png",
+          "15-Volumes-Futuros/Volume-2-As-Estrelas-da-Promessa/paginas_piloto/vol2_p09_cap2_descobertas.png",
+          "15-Volumes-Futuros/Volume-2-As-Estrelas-da-Promessa/paginas_piloto/vol2_p10_cap3_escada.png",
+          "15-Volumes-Futuros/Volume-2-As-Estrelas-da-Promessa/paginas_piloto/vol2_p11_cap3_camadas.png",
+          "15-Volumes-Futuros/Volume-2-As-Estrelas-da-Promessa/paginas_piloto/vol2_p12_cap3_descobertas.png",
+          "15-Volumes-Futuros/Volume-2-As-Estrelas-da-Promessa/paginas_piloto/vol2_p13_cap4_tunica.png",
+          "15-Volumes-Futuros/Volume-2-As-Estrelas-da-Promessa/paginas_piloto/vol2_p14_cap4_camadas.png",
+          "15-Volumes-Futuros/Volume-2-As-Estrelas-da-Promessa/paginas_piloto/vol2_p15_cap4_descobertas.png",
+          "15-Volumes-Futuros/Volume-2-As-Estrelas-da-Promessa/paginas_piloto/vol2_p16_cap5_celeiros.png",
+          "15-Volumes-Futuros/Volume-2-As-Estrelas-da-Promessa/paginas_piloto/vol2_p17_cap5_camadas.png",
+          "15-Volumes-Futuros/Volume-2-As-Estrelas-da-Promessa/paginas_piloto/vol2_p18_cap5_descobertas.png",
+          "15-Volumes-Futuros/Volume-2-As-Estrelas-da-Promessa/paginas_piloto/vol2_p19_cap6_perdao.png",
+          "15-Volumes-Futuros/Volume-2-As-Estrelas-da-Promessa/paginas_piloto/vol2_p20_cap6_camadas.png",
+          "15-Volumes-Futuros/Volume-2-As-Estrelas-da-Promessa/paginas_piloto/vol2_p21_cap6_descobertas.png",
+          "15-Volumes-Futuros/Volume-2-As-Estrelas-da-Promessa/paginas_piloto/vol2_p22_arqueologia_glossario.png",
+          "15-Volumes-Futuros/Volume-2-As-Estrelas-da-Promessa/paginas_piloto/vol2_p23_biblia_personagens.png",
+          "15-Volumes-Futuros/Volume-2-As-Estrelas-da-Promessa/paginas_piloto/vol2_p24_contracapa.png"
+        ]
+      },
+      vol3: {
+        title: "Leitor Interativo — Volume 3: O Caminho da Liberdade",
+        pages: [
+          "15-Volumes-Futuros/Volume-3-O-Caminho-da-Liberdade/paginas_piloto/vol3_p01_capa.png",
+          "15-Volumes-Futuros/Volume-3-O-Caminho-da-Liberdade/paginas_piloto/vol3_p02_folha_rosto.png",
+          "15-Volumes-Futuros/Volume-3-O-Caminho-da-Liberdade/paginas_piloto/vol3_p03_mapa_sumario.png",
+          "15-Volumes-Futuros/Volume-3-O-Caminho-da-Liberdade/paginas_piloto/vol3_p02_cesto_nilo.png",
+          "15-Volumes-Futuros/Volume-3-O-Caminho-da-Liberdade/paginas_piloto/vol3_p05_cap1_camadas.png",
+          "15-Volumes-Futuros/Volume-3-O-Caminho-da-Liberdade/paginas_piloto/vol3_p06_cap1_descobertas.png",
+          "15-Volumes-Futuros/Volume-3-O-Caminho-da-Liberdade/paginas_piloto/vol3_p03_sarca_luz.png",
+          "15-Volumes-Futuros/Volume-3-O-Caminho-da-Liberdade/paginas_piloto/vol3_p08_cap2_camadas.png",
+          "15-Volumes-Futuros/Volume-3-O-Caminho-da-Liberdade/paginas_piloto/vol3_p09_cap2_descobertas.png",
+          "15-Volumes-Futuros/Volume-3-O-Caminho-da-Liberdade/paginas_piloto/vol3_p04_noite_liberdade.png",
+          "15-Volumes-Futuros/Volume-3-O-Caminho-da-Liberdade/paginas_piloto/vol3_p11_cap3_camadas.png",
+          "15-Volumes-Futuros/Volume-3-O-Caminho-da-Liberdade/paginas_piloto/vol3_p12_cap3_descobertas.png",
+          "15-Volumes-Futuros/Volume-3-O-Caminho-da-Liberdade/paginas_piloto/vol3_p05_travessia_mar.png",
+          "15-Volumes-Futuros/Volume-3-O-Caminho-da-Liberdade/paginas_piloto/vol3_p14_cap4_camadas.png",
+          "15-Volumes-Futuros/Volume-3-O-Caminho-da-Liberdade/paginas_piloto/vol3_p15_cap4_descobertas.png",
+          "15-Volumes-Futuros/Volume-3-O-Caminho-da-Liberdade/paginas_piloto/vol3_p06_pao_do_ceu_sinai.png",
+          "15-Volumes-Futuros/Volume-3-O-Caminho-da-Liberdade/paginas_piloto/vol3_p17_cap5_camadas.png",
+          "15-Volumes-Futuros/Volume-3-O-Caminho-da-Liberdade/paginas_piloto/vol3_p18_cap5_descobertas.png",
+          "15-Volumes-Futuros/Volume-3-O-Caminho-da-Liberdade/paginas_piloto/vol3_p07_terra_prometida.png",
+          "15-Volumes-Futuros/Volume-3-O-Caminho-da-Liberdade/paginas_piloto/vol3_p20_cap6_camadas.png",
+          "15-Volumes-Futuros/Volume-3-O-Caminho-da-Liberdade/paginas_piloto/vol3_p21_cap6_descobertas.png",
+          "15-Volumes-Futuros/Volume-3-O-Caminho-da-Liberdade/paginas_piloto/vol3_p22_arqueologia_glossario.png",
+          "15-Volumes-Futuros/Volume-3-O-Caminho-da-Liberdade/paginas_piloto/vol3_p08_descobertas_e_personagens.png",
+          "15-Volumes-Futuros/Volume-3-O-Caminho-da-Liberdade/paginas_piloto/vol3_p24_contracapa.png"
+        ]
+      }
+    };
+
+    let currentBook = "vol1";
+    let currentPageIdx = 0;
+
+    function renderPage() {
+      const book = BOOKS[currentBook];
+      document.getElementById("reader-title").textContent = book.title;
+      document.getElementById("book-select").value = currentBook;
+      document.getElementById("page-img").src = book.pages[currentPageIdx];
+      const num = String(currentPageIdx + 1).padStart(2, "0");
+      const tot = String(book.pages.length).padStart(2, "0");
+      document.getElementById("page-counter").textContent = `Página ${num} de ${tot}`;
+    }
+
+    function loadBook(bookKey) {
+      currentBook = bookKey;
+      currentPageIdx = 0;
+      renderPage();
+      document.getElementById("leitor").scrollIntoView({ behavior: "smooth" });
+    }
+
+    function prevPage() {
+      if (currentPageIdx > 0) {
+        currentPageIdx--;
+        renderPage();
+      }
+    }
+
+    function nextPage() {
+      const book = BOOKS[currentBook];
+      if (currentPageIdx < book.pages.length - 1) {
+        currentPageIdx++;
+        renderPage();
+      }
+    }
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowLeft") prevPage();
+      if (e.key === "ArrowRight") nextPage();
+    });
+  </script>
+</body>
+</html>
